@@ -19,18 +19,9 @@ function ProgramNew() {
           },
           body: JSON.stringify(program),
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-          })
+          .then((response) => response.json())
           .then((data) => {
             navigate(`/programs/${data.insertId}`);
-          })
-          .catch((error) => {
-            console.error("Error during submission:", error);
-            alert("Failed to add the program. Please try again.");
           });
       }}
     >

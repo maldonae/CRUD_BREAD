@@ -8,7 +8,7 @@ type ProgramInput = {
 };
 
 class ProgramRepository {
-  async create(program: { title: string; synopsis?: string }) {
+  async create(program: Omit<ProgramInput, "id">) {
     // Execute the SQL INSERT query to add a new program to the "program" table
     const [result] = await databaseClient.query<Result>(
       "insert into program (title, synopsis) values (?, ?)",
@@ -19,11 +19,11 @@ class ProgramRepository {
     return result.insertId;
   }
 
-  async read(program: { id: number }) {
+  async read(id: number) {
     // Execute the SQL SELECT query to retrieve a specific program by its ID
     const [rows] = await databaseClient.query<Rows>(
       "select * from program where id = ?",
-      [program.id],
+      [id],
     );
 
     // Return the first row of the result, which represents the program
@@ -38,7 +38,7 @@ class ProgramRepository {
     return rows as ProgramInput[];
   }
 
-  async update(program: { title: string; synopsis?: string; id: number }) {
+  async update(program: ProgramInput) {
     const { title, synopsis, id } = program;
 
     // Si `synopsis` est undefined, nous pouvons le traiter en mettant `NULL` à la place
@@ -49,11 +49,11 @@ class ProgramRepository {
     return result.affectedRows;
   }
 
-  async delete(program: { id: number }) {
+  async delete(id: number) {
     // Execute the SQL DELETE query to delete an existing program from the "program" table
     const [result] = await databaseClient.query<Result>(
       "delete from program where id = ?",
-      [program.id],
+      [id],
     );
 
     // Return how many rows were affected

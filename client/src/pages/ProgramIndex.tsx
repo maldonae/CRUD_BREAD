@@ -17,6 +17,10 @@ function ProgramIndex() {
       });
   }, []);
 
+  if (programs.length === 0) {
+    return <div>chargeme,nt....</div>;
+  }
+
   return (
     <>
       <Link to={"/programs/new"}>Ajouter</Link>

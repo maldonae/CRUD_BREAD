@@ -46,7 +46,7 @@ const browse: RequestHandler = async (req, res, next) => {
 const read: RequestHandler = async (req, res, next) => {
   try {
     // Fetch a specific program based on the provided ID
-    const programId = { id: Number(req.params.id) };
+    const programId = Number(req.params.id);
     const programs = await programRepository.read(programId);
 
     // If the program is not found, respond with HTTP 404 (Not Found)
@@ -105,7 +105,7 @@ const add: RequestHandler = async (req, res, next) => {
     const insertId = await programRepository.create(newProgram);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId: newProgram });
+    res.status(201).json({ insertId });
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
@@ -115,7 +115,7 @@ const add: RequestHandler = async (req, res, next) => {
 const destroy: RequestHandler = async (req, res, next) => {
   try {
     // Delete a specific category based on the provided ID
-    const programId = { id: Number(req.params.id) };
+    const programId = Number(req.params.id);
 
     await programRepository.delete(programId);
 
