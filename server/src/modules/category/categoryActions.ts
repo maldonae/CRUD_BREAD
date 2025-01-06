@@ -105,7 +105,7 @@ const validate: RequestHandler = (req, res, next) => {
   const { name } = req.body;
 
   // put your validation rules here
-  if (name == null) {
+  if (name === "") {
     errors.push({ field: "name", message: "The field is required" });
   } else if (name.length > 255) {
     errors.push({
